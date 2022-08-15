@@ -1,0 +1,32 @@
+version: '3'
+networks:
+    randomred:
+services:
+  node:
+    container_name: node
+    build: ./backend
+    networks:
+      randomred:
+        aliases:
+          - backendreto
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - 8080:80
+    networks:
+      randomred:
+        aliases:
+          - nginx-ip 
+    depends_on:
+      - node
+
+  mysql:
+    container_name: mysql
+    build: ./baseDatos
+    networks:
+      randomred:
+        aliases:
+          - mysql-ip 
+    ports:
+      - 3306:3306
